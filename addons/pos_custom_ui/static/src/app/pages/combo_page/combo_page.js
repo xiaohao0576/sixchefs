@@ -2,12 +2,16 @@ import { patch } from "@web/core/utils/patch";
 import { ComboPage } from "@pos_self_order/app/pages/combo_page/combo_page";
 
 function isFullIncludedCombo(combo) {
-    const comboItems = combo.combo_item_ids.filter((item) => item.product_id);
+    const comboItems = getAvailableComboItems(combo);
     return (
         combo.qty_free > 0 &&
         combo.qty_max === combo.qty_free &&
         comboItems.length === combo.qty_free
     );
+}
+
+function getAvailableComboItems(combo) {
+    return combo.combo_item_ids.filter((item) => item.product_id?.self_order_available);
 }
 
 patch(ComboPage.prototype, {
@@ -19,7 +23,7 @@ patch(ComboPage.prototype, {
     },
 
     canSelectAllComboItems(combo) {
-        return isFullIncludedCombo(combo) && combo.combo_item_ids.every(
+        return isFullIncludedCombo(combo) && getAvailableComboItems(combo).every(
             (item) => !this.hasAttribute(item.product_id)
         );
     },
@@ -32,7 +36,7 @@ patch(ComboPage.prototype, {
             }
             choiceState.selectedItems = {};
             choiceState.selectedItemsOrder = [];
-            for (const comboItem of choice.combo_item_ids) {
+            for (const comboItem of getAvailableComboItems(choice)) {
                 choiceState.selectedItems[comboItem.id] = { item: comboItem, qty: 1 };
                 choiceState.selectedItemsOrder.push(comboItem.id);
             }
