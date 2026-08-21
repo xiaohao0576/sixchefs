@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_table_name.FloorDesign" t-inherit="pos_restaurant.floor_screen_element" t-inherit-mode="extension">
+        <!-- Optimized Alias Presentation -->
+        <xpath expr="//div[hasclass('o_fp_table_number')]"
+               position="replace">
+            <div class="o_fp_table_number label fs-4 fw-bolder"
+                 t-att-class="{'opacity-50': element.parent_id}"
+                 t-att-style="tableContentStyle">
+                <span class="alias-designation">
+                    <t t-out="table.table_alias || table.table_number"/>
+                </span>
+            </div>
+        </xpath>
+    </t>
+</templates>
