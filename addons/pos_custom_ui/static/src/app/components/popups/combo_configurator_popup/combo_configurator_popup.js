@@ -7,7 +7,7 @@ function canSelectAllComboItems(combo) {
         combo.qty_free > 0 &&
         combo.qty_max === combo.qty_free &&
         comboItems.length === combo.qty_free &&
-        comboItems.every((item) => !item.product_id.isConfigurable())
+        comboItems.every((item) => !item.product_id.product_tmpl_id.needToConfigure())
     );
 }
 
