@@ -3,12 +3,16 @@
     'version': '1.0.0',
     'category': 'Point of Sale',
     'summary': 'Custom POS UI product language fields',
-    'depends': ['point_of_sale'],
+    'depends': ['point_of_sale', 'pos_self_order'],
     'assets': {
         'point_of_sale._assets_pos': [
             'pos_custom_ui/static/src/app/utils/printer/generate_printer_data.js',
+            'pos_custom_ui/static/src/app/components/popups/combo_configurator_popup/combo_configurator_popup.js',
             'pos_custom_ui/static/src/app/components/product_card/product_card.xml',
             'pos_custom_ui/static/src/app/components/orderline/orderline.xml',
+        ],
+        'pos_self_order.assets': [
+            'pos_custom_ui/static/src/app/pages/combo_page/combo_page.js',
         ],
     },
     'license': 'LGPL-3',
