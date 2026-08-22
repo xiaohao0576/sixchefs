@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.ProductPage" t-inherit="pos_self_order.ProductPage" t-inherit-mode="extension">
+        <xpath expr="//AttributeSelection" position="attributes">
+            <attribute name="t-key">this.productTemplate.id</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_self_footer')]//button[hasclass('btn-secondary')]" position="after">
+            <div class="d-flex gap-2">
+                <button class="btn btn-lg btn-secondary d-inline-flex align-items-center gap-2" t-on-click="this.previousProduct" t-att-disabled="!this.hasPreviousProduct">
+                    <i class="oi oi-chevron-up d-md-none" />
+                    <span class="d-none d-md-inline">Previous</span>
+                </button>
+                <button class="btn btn-lg btn-secondary d-inline-flex align-items-center gap-2" t-on-click="this.nextProduct" t-att-disabled="!this.hasNextProduct">
+                    <i class="oi oi-chevron-down d-md-none" />
+                    <span class="d-none d-md-inline">Next</span>
+                </button>
+            </div>
+        </xpath>
+    </t>
+</templates>

@@ -13,6 +13,9 @@
         ],
         'pos_self_order.assets': [
             'pos_custom_ui/static/src/app/pages/combo_page/combo_page.js',
+            'pos_custom_ui/static/src/app/pages/product_list_page/product_list_page.js',
+            'pos_custom_ui/static/src/app/pages/product_page/product_page.js',
+            'pos_custom_ui/static/src/app/pages/product_page/product_page.xml',
         ],
     },
     'license': 'LGPL-3',
