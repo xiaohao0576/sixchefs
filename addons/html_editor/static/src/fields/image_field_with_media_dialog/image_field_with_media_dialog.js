@@ -21,6 +21,8 @@ export class ImageFieldWithMediaDialog extends ImageField {
         return {
             visibleTabs: ["IMAGES"],
             activeTab: "IMAGES",
+            resModel: this.props.record.resModel,
+            resId: this.props.record.resId,
             save: (el) => {}, // Simple rebound to fake its execution
             imageSave: this.onImageSave.bind(this),
             imageUrl: this.imageUrl,
