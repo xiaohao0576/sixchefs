@@ -45,7 +45,7 @@ export class ProductListPage extends Component {
             subCategories: [],
         });
 
-        if (!this.selfOrder.kioskMode) {
+        if (!this.useNestedCategoryNavigation) {
             this.scrollToCategory = useCategoryScrollSpy(
                 this.state.selectedCategory?.id,
                 this.categoryListRef,
@@ -92,7 +92,7 @@ export class ProductListPage extends Component {
 
     selectCategory(category) {
         this.state.selectedCategory = category;
-        if (this.selfOrder.kioskMode) {
+        if (this.useNestedCategoryNavigation) {
             if (!category.parent_id) {
                 this.toggleSubCategoryPanel();
             }
@@ -104,7 +104,7 @@ export class ProductListPage extends Component {
     }
 
     ensureCategoryVisible() {
-        if (!this.selfOrder.kioskMode) {
+        if (!this.useNestedCategoryNavigation) {
             return;
         }
 
@@ -130,8 +130,12 @@ export class ProductListPage extends Component {
         return this.state.selectedCategory;
     }
 
+    get useNestedCategoryNavigation() {
+        return true;
+    }
+
     getSubCategories() {
-        if (!this.selfOrder.kioskMode) {
+        if (!this.useNestedCategoryNavigation) {
             return [];
         }
 
@@ -146,7 +150,7 @@ export class ProductListPage extends Component {
     }
 
     get productCategories() {
-        if (this.selfOrder.kioskMode) {
+        if (this.useNestedCategoryNavigation) {
             return [this.selectedCategory];
         }
         return this.state.topCategories;
@@ -161,7 +165,7 @@ export class ProductListPage extends Component {
     }
 
     toggleSubCategoryPanel() {
-        if (!this.selfOrder.kioskMode) {
+        if (!this.useNestedCategoryNavigation) {
             return;
         }
 
