@@ -10,12 +10,10 @@ class ProductTemplate(models.Model):
 
     @api.depends('name')
     def _compute_pos_custom_names(self):
-        name_field = self._fields['name']
         for product in self:
-            translations = name_field._get_stored_translations(product) or {}
-            product.name_en = translations.get('en_US') or product.with_context(lang='en_US').name or ''
-            product.name_km = translations.get('km_KH') or ''
-            product.name_cn = translations.get('zh_CN') or ''
+            product.name_en = product.with_context(lang='en_US').name or ''
+            product.name_km = product.with_context(lang='km_KH').name or ''
+            product.name_cn = product.with_context(lang='zh_CN').name or ''
 
     @api.model
     def _load_pos_data_fields(self, config):
