@@ -19,5 +19,25 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-from . import models
-from . import receipt
+from odoo import models
+
+
+class PosOrderReceipt(models.AbstractModel):
+    _inherit = 'pos.order.receipt'
+
+    def order_receipt_generate_data(self, basic_receipt=False):
+        data = super().order_receipt_generate_data(basic_receipt)
+        self._set_table_alias_receipt_data(data)
+        return data
+
+    def _generate_preparation_receipt_data(self, order_change):
+        data = super()._generate_preparation_receipt_data(order_change)
+        for receipt in data:
+            self._set_table_alias_receipt_data(receipt)
+        return data
+
+    def _set_table_alias_receipt_data(self, data):
+        table = self.table_id
+        data['extra_data']['table_alias'] = (
+            table.table_alias or table.table_number if table else False
+        )
