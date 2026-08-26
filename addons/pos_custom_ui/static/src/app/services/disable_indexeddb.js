@@ -1,6 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { SelfOrder } from "@pos_self_order/app/services/self_order_service";
 import { PosData } from "@point_of_sale/app/services/data_service";
+import { PosOrder } from "@point_of_sale/app/models/pos_order";
 
 function isIndexedDBDisabled() {
     return new URL(window.location.href).searchParams.get("disable_indexeddb") === "1";
@@ -70,5 +71,15 @@ patch(SelfOrder.prototype, {
             return;
         }
         return await super.getUserDataFromServer(...arguments);
+    },
+});
+
+patch(PosOrder.prototype, {
+    serializeForORM() {
+        const order = super.serializeForORM(...arguments);
+        if (isIndexedDBDisabled()) {
+            order.disable_indexeddb = true;
+        }
+        return order;
     },
 });
