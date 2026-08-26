@@ -12,6 +12,7 @@
             'pos_custom_ui/static/src/app/components/orderline/orderline.xml',
         ],
         'pos_self_order.assets': [
+            'pos_custom_ui/static/src/app/services/disable_indexeddb.js',
             'pos_custom_ui/static/src/app/pages/combo_page/combo_page.js',
             'pos_custom_ui/static/src/app/pages/product_list_page/product_list_page.js',
             'pos_custom_ui/static/src/app/pages/product_page/product_page.js',
