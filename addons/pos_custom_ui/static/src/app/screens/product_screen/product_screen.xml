@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_custom_ui.ProductScreen" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension">
+        <xpath expr="//ActionpadWidget" position="attributes">
+            <attribute name="actionName.translate" remove="1"/>
+            <attribute name="actionName">this.currentOrder?.self_ordering_table_id and !this.currentOrder?.table_id ? 'Transfer' : 'Payment'</attribute>
+            <attribute name="actionToTrigger">this.currentOrder?.self_ordering_table_id and !this.currentOrder?.table_id ? () => this.pos.startTransferOrder() : () => this.pos.pay()</attribute>
+        </xpath>
+    </t>
+</templates>
