@@ -4090,7 +4090,7 @@ msgstr "在使用此支付方式时强制设置客户并且分客户拆分日记
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/models/accounting/pos_order_line_accounting.js:0
 msgid "Free"
-msgstr "免费"
+msgstr "赠送"
 
 #. module: point_of_sale
 #. odoo-javascript

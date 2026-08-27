@@ -368,7 +368,7 @@ msgstr "类别"
 #. odoo-javascript
 #: code:addons/pos_self_order/static/src/app/components/order_widget/order_widget.js:0
 msgid "Checkout"
-msgstr "结账"
+msgstr "购物车"
 
 #. module: pos_self_order
 #: model:ir.model.fields,help:pos_self_order.field_pos_config__self_ordering_service_mode
@@ -1153,7 +1153,7 @@ msgstr "开放式考勤机网址"
 #: code:addons/pos_self_order/static/src/app/components/order_widget/order_widget.js:0
 #: code:addons/pos_self_order/static/src/app/pages/stand_number_page/stand_number_page.js:0
 msgid "Order"
-msgstr "订单"
+msgstr "下单"
 
 #. module: pos_self_order
 #. odoo-python
