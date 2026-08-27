@@ -210,8 +210,8 @@ export function isPrivateIp(ip) {
     );
 }
 
-export const LONG_PRESS_DURATION = session.test_mode ? 100 : 500;
-export const TOUCH_DELAY = session.test_mode ? 50 : 300;
+export const LONG_PRESS_DURATION = session.test_mode ? 100 : 1500;
+export const TOUCH_DELAY = session.test_mode ? 50 : 1000;
 
 export function orderUsageUTCtoLocalUtil(data) {
     const result = {};
