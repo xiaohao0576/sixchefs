@@ -16,5 +16,10 @@
                 <t t-else="" t-out="this.props.name"/>
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('product-content')]" position="after">
+            <span t-if="!this.props.imageUrl and this.props.product.default_code"
+                class="product-default-code position-absolute top-0 end-0"
+                t-out="this.props.product.default_code"/>
+        </xpath>
     </t>
 </templates>

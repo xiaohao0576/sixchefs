@@ -13,6 +13,7 @@
             'pos_custom_ui/static/src/app/utils/printer/generate_printer_data.js',
             'pos_custom_ui/static/src/app/components/popups/combo_configurator_popup/combo_configurator_popup.js',
             'pos_custom_ui/static/src/app/components/product_card/product_card.xml',
+            'pos_custom_ui/static/src/app/components/product_card/product_card.scss',
             'pos_custom_ui/static/src/app/components/orderline/orderline.xml',
         ],
         'pos_self_order.assets': [
