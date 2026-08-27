@@ -10,6 +10,11 @@
             'pos_custom_ui/static/src/app/screens/product_screen/actionpad_widget/actionpad_widget.js',
             'pos_custom_ui/static/src/app/screens/product_screen/product_screen.xml',
             'pos_custom_ui/static/src/app/screens/product_screen/product_screen.scss',
+            (
+                'after',
+                'pos_restaurant/static/src/app/screens/product_screen/control_buttons/control_buttons.xml',
+                'pos_custom_ui/static/src/app/screens/product_screen/control_buttons/control_buttons.xml',
+            ),
             'pos_custom_ui/static/src/app/utils/printer/generate_printer_data.js',
             'pos_custom_ui/static/src/app/components/popups/combo_configurator_popup/combo_configurator_popup.js',
             'pos_custom_ui/static/src/app/components/product_card/product_card.xml',
