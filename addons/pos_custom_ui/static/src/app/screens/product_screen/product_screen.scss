@@ -1,0 +1,19 @@
+// Soften the pure-white ProductScreen background to reduce eye strain.
+// Only affects .product-screen (and its inner panes), no other POS screens.
+.product-screen {
+    background-color: #f2efe9;
+
+    .leftpane {
+        background-color: #f6f4ef !important;
+    }
+
+    .rightpane {
+        background-color: #f2efe9 !important;
+
+        // Keep card backgrounds white so text/product cards stay readable
+        // against the slightly darker page background.
+        .product-list {
+            background-color: transparent;
+        }
+    }
+}
