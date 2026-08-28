@@ -1,7 +1,7 @@
 {
     "name": "POS Preparation Cancellation",
     "summary": "Cancel prepared items with a reason from the Point of Sale",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "category": "Sales/Point of Sale",
     "author": "HoganTech",
     "depends": ["point_of_sale", "pos_restaurant"],
