@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_preparation_cancellation.ControlButtons"
+       t-inherit="point_of_sale.ControlButtons"
+       t-inherit-mode="extension">
+        <xpath expr="//InternalNoteButton" position="after">
+            <PreparationCancellationButton />
+        </xpath>
+    </t>
+
+    <t t-name="pos_preparation_cancellation.PreparationCancellationButton">
+        <button t-if="this.isVisible"
+                class="control-button btn btn-lg btn-secondary d-inline-flex flex-md-column justify-content-md-center gap-1 overflow-hidden"
+                t-att-disabled="this.isDisabled"
+                t-on-click="this.onClick">
+            <span class="px-1">Cancel Item</span>
+        </button>
+    </t>
+
+    <t t-name="pos_preparation_cancellation.PreparationCancellationDialog">
+        <Dialog title.translate="Cancel Item" size="'xl'" contentClass="'o_pos_preparation_cancellation_dialog'">
+            <div class="o_cancel_dialog_layout">
+                <section class="o_cancel_reasons">
+                    <div class="o_cancel_reason_grid">
+                        <button t-foreach="this.reasons" t-as="reason" t-key="reason"
+                                class="btn btn-lg o_cancel_reason"
+                                t-att-class="this.state.selectedReason === reason ? 'btn-danger' : 'btn-outline-danger'"
+                                t-on-click="() => this.selectReason(reason)"
+                                t-out="reason"/>
+                    </div>
+                    <input class="form-control form-control-lg o_cancel_custom_reason"
+                           type="text"
+                           placeholder="Custom reason"
+                           t-att-value="this.state.customReason"
+                           t-on-focus="() => this.selectReason('custom')"
+                           t-on-input="this.onCustomReasonInput"/>
+                </section>
+
+                <section class="o_cancel_quantity">
+                    <label class="form-label fw-bold" for="cancel-quantity">Cancellation Quantity</label>
+                    <div class="input-group mb-3">
+                        <input id="cancel-quantity"
+                               class="form-control form-control-lg text-end"
+                               type="text"
+                               inputmode="decimal"
+                               t-att-value="this.state.quantity"
+                               t-on-input="this.onQuantityInput"/>
+                        <button class="btn btn-secondary px-4" t-on-click="this.backspace" title="Backspace">
+                            <i class="fa fa-backward" aria-hidden="true"/>
+                        </button>
+                    </div>
+                    <Numpad buttons="this.numpadButtons" onClick.bind="this.onNumpadClick"/>
+                </section>
+
+                <aside class="o_cancel_actions">
+                    <button class="btn btn-primary btn-lg" t-att-disabled="!this.isValid" t-on-click="this.confirm">Confirm</button>
+                    <button class="btn btn-secondary btn-lg" t-on-click="this.cancel">Cancel</button>
+                    <button class="btn btn-outline-secondary btn-lg" t-on-click="this.clear">Clear</button>
+                </aside>
+            </div>
+            <div class="text-center text-muted mt-3">Please enter the cancellation quantity, then click “Confirm” to save.</div>
+            <t t-set-slot="footer"/>
+        </Dialog>
+    </t>
+</templates>

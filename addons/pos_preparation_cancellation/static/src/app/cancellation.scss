@@ -1,0 +1,43 @@
+.o_pos_preparation_cancellation_dialog {
+    .o_cancel_dialog_layout {
+        display: grid;
+        grid-template-columns: minmax(20rem, 1.2fr) minmax(18rem, 1fr) 8rem;
+        gap: 1rem;
+    }
+
+    .o_cancel_reason_grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.5rem;
+    }
+
+    .o_cancel_reason {
+        min-height: 4rem;
+    }
+
+    .o_cancel_custom_reason {
+        margin-top: 0.75rem;
+        min-height: 4rem;
+    }
+
+    .o_cancel_quantity .numpad {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .o_cancel_actions {
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    @include media-breakpoint-down(md) {
+        .o_cancel_dialog_layout {
+            grid-template-columns: 1fr;
+        }
+
+        .o_cancel_actions {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+        }
+    }
+}

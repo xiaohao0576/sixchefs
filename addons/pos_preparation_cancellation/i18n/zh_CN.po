@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_preparation_cancellation
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-28 09:47+0000\n"
+"Language: zh_CN\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Backspace"
+msgstr "退格"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Cancel"
+msgstr "取消"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Cancel Item"
+msgstr "退菜"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Cancellation Quantity"
+msgstr "退菜数量"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_button.js:0
+msgid "Cancellation failed"
+msgstr "退菜失败"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Change Dish"
+msgstr "换菜"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Clear"
+msgstr "清空"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Confirm"
+msgstr "确认"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Custom reason"
+msgstr "自定义"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Customer Reason"
+msgstr "顾客原因"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Kitchen Reason"
+msgstr "出品部原因"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Operation Error"
+msgstr "操作错误"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Output Timeout"
+msgstr "出口超时"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation.xml:0
+msgid "Please enter the cancellation quantity, then click “Confirm” to save."
+msgstr "请输入退菜数量，然后点击“确认保存”"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Quality Issue"
+msgstr "质量问题"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Sold Out"
+msgstr "已沽清"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_dialog.js:0
+msgid "Test"
+msgstr "测试"
+
+#. module: pos_preparation_cancellation
+#. odoo-javascript
+#: code:addons/pos_preparation_cancellation/static/src/app/cancellation_button.js:0
+msgid "The selected item could not be updated."
+msgstr "无法更新所选菜品。"
