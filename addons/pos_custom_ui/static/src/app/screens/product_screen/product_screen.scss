@@ -1,5 +1,10 @@
 // Soften the pure-white ProductScreen background to reduce eye strain.
 // Only affects .product-screen (and its inner panes), no other POS screens.
+.pos .control-buttons .control-button:has(> i.oi-arrow-down),
+.pos .control-buttons .control-button:has(> i.fa-link) {
+    display: none !important;
+}
+
 .product-screen {
     background-color: #f2efe9;
 
