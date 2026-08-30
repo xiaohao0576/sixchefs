@@ -1345,6 +1345,12 @@ msgid "Split Order"
 msgstr "分拆账单"
 
 #. module: pos_restaurant
+#. odoo-javascript
+#: code:addons/pos_restaurant/static/src/app/screens/product_screen/control_buttons/control_buttons.xml:0
+msgid "Split"
+msgstr "拆分"
+
+#. module: pos_restaurant
 #: model_terms:ir.ui.view,arch_db:pos_restaurant.res_config_settings_view_form
 msgid "Split total or order lines"
 msgstr "拆分总计或订单明细"

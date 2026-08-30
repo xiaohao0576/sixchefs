@@ -357,6 +357,12 @@ msgid "Sales Order Line"
 msgstr "销售订单明细"
 
 #. module: pos_sale
+#. odoo-javascript
+#: code:addons/pos_sale/static/src/app/components/screens/product_screen/control_buttons/control_buttons.xml:0
+msgid "Quotation / Order"
+msgstr "报价单 / 订单"
+
+#. module: pos_sale
 #: model:ir.model,name:pos_sale.model_crm_team
 #: model:ir.model.fields,field_description:pos_sale.field_pos_config__crm_team_id
 #: model:ir.model.fields,field_description:pos_sale.field_pos_order__crm_team_id
