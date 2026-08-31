@@ -58,6 +58,9 @@ patch(ActionpadWidget.prototype, {
             !this.getCourseToFire()
         );
     },
+    get paymentLabel() {
+        return _t("Payment");
+    },
     get displayFireCourseBtn() {
         const order = this.currentOrder;
         if (order.isDirectSale || !order.hasCourses()) {

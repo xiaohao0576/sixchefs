@@ -1,4 +1,5 @@
 import { patch } from "@web/core/utils/patch";
+import { _t } from "@web/core/l10n/translation";
 import { ActionpadWidget } from "@point_of_sale/app/screens/product_screen/action_pad/action_pad";
 
 patch(ActionpadWidget.prototype, {
@@ -7,8 +8,8 @@ patch(ActionpadWidget.prototype, {
         return !!order?.self_ordering_table_id && !order?.table_id;
     },
 
-    get transferActionName() {
-        return "Transfer";
+    get customActionName() {
+        return this.isSelfOrderTableOrder ? _t("Transfer") : _t("Payment");
     },
 
     clickTransferOrder() {

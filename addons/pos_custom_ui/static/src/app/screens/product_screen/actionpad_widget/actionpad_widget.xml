@@ -3,7 +3,7 @@
     <t t-name="pos_custom_ui.ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension">
         <xpath expr="//button[hasclass('pay-order-button')]" position="attributes">
             <attribute name="t-on-click">this.isSelfOrderTableOrder ? this.clickTransferOrder.bind(this) : this.props.actionToTrigger</attribute>
-            <attribute name="t-out">this.isSelfOrderTableOrder ? this.transferActionName : this.props.actionName</attribute>
+            <attribute name="t-out">this.customActionName</attribute>
             <attribute name="t-att-disabled">this.pos.cashier?._role !== 'manager'</attribute>
         </xpath>
     </t>
