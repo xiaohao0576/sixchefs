@@ -207,7 +207,7 @@
                 <em><t t-out="line['service_fee_display_info']['amount']" /> </em><t t-out="line['service_fee_display_info']['description']"/>
             </span>
             <div t-if="line['discount'] and not conditions['basic_receipt'] and not line['combo_parent_id']" class="text-small no-discount-price">
-                <t t-out="line['discount']"/>% discount off on <t t-out="line['no_discount_price']"/>
+                原价 <t t-out="line['no_discount_price']"/>，优惠 <t t-out="line['discount']"/>%
             </div>
             <div t-if="line['customer_note']" class="text-normal">
                 <strong>Note: </strong>
