@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_pos_settle_due_wizard_user,pos.settle.due.wizard user,pos.settle.due.wizard,point_of_sale.group_pos_user,crud,

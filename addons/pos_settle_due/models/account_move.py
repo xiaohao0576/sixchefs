@@ -1,0 +1,20 @@
+from odoo import models, api, fields
+
+
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    pos_order_line_ids = fields.One2many('pos.order.line', 'settled_invoice_id', string="Order lines settling the invoice")
+    pos_amount_unsettled = fields.Monetary(
+        string="Amount To Pay In POS",
+        compute='_compute_pos_amount_unsettled',
+        store=True,
+    )
+
+    @api.depends('pos_order_line_ids', 'amount_residual_signed')
+    def _compute_pos_amount_unsettled(self):
+        for invoice in self:
+            total_pos_paid = sum(invoice.pos_order_line_ids.filtered(
+                lambda line: line.order_id.session_id.state != 'closed'
+            ).mapped('price_unit'))
+            invoice.pos_amount_unsettled = invoice.amount_residual_signed - total_pos_paid

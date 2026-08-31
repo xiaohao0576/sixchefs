@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_due_pos_order_list_view" model="ir.ui.view">
+        <field name="name">pos.order.list.customer.due</field>
+        <field name="model">pos.order</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <list string="POS Orders" create="0" duplicate="0">
+                <header>
+                    <button name="action_open_settle_due_wizard" type="object" string="Settle Due"/>
+                </header>
+                <field name="currency_id" column_invisible="True"/>  <!-- Monetary field -->
+                <field name="date_order"/>
+                <field name="name"/>
+                <field name="session_id"/>
+                <field name="partner_id"/>
+                <field name="pos_reference"/>
+                <field name="amount_total" sum="Amount total" widget="monetary" decoration-bf="1"/>
+                <field name="customer_due_total" sum="Total due" widget="monetary"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state not in ('draft','cancel')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="pos_order_form_inherit_pos_settle_due" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_settle_due_wizard"
+                        string="Settle Due"
+                        type="object"
+                        class="btn-primary"
+                        invisible="customer_due_total &lt;= 0"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_settled_orders"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-list"
+                        invisible="settled_orders_count == 0">
+                        <field name="settled_orders_count" widget="statinfo" string="Settled Orders" />
+                </button>
+                </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_filter_inherit_pos_settle_due" model="ir.ui.view">
+        <field name="name">pos.order.filter.inherit.pos.settle.due</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='posted']" position="after">
+                <filter string="Has Customer Due" name="has_customer_due" domain="[('customer_due_total', '&gt;', 0)]"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Commercial Customer" name="commercial_partner" domain="[]" context="{'group_by': 'commercial_partner_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_pos_order_due_settlement" model="ir.actions.act_window">
+        <field name="name">Orders To Settle</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="customer_due_pos_order_list_view"/>
+        <field name="search_view_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="domain">[('customer_due_total', '&gt;', 0), ('state', 'in', ['paid', 'done']), ('session_id.state', '=', 'closed')]</field>
+        <field name="context">{'search_default_has_customer_due': 1, 'group_by': 'commercial_partner_id'}</field>
+    </record>
+
+    <menuitem id="menu_pos_order_due_settlement"
+              name="Orders To Settle"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_pos_order_due_settlement"
+              sequence="4"
+              groups="point_of_sale.group_pos_user,point_of_sale.group_pos_manager"/>
+
+    <record id="pos_order_settle_due_action" model="ir.actions.server">
+        <field name="name">Settle Due</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="group_ids" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+        <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = records.action_open_settle_due_wizard()
+        </field>
+    </record>
+</odoo>
