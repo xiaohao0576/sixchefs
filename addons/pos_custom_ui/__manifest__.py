@@ -8,6 +8,7 @@
         'point_of_sale._assets_pos': [
             'pos_custom_ui/static/src/app/models/product_template.js',
             'pos_custom_ui/static/src/app/components/category_selector/category_selector.js',
+            'pos_custom_ui/static/src/app/screens/floor_screen/floor_screen.xml',
             'pos_custom_ui/static/src/app/screens/product_screen/actionpad_widget/actionpad_widget.js',
             'pos_custom_ui/static/src/app/screens/product_screen/actionpad_widget/actionpad_widget.xml',
             'pos_custom_ui/static/src/app/screens/product_screen/product_screen.xml',
