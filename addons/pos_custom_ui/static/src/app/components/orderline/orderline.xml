@@ -4,7 +4,13 @@
         <xpath expr="//span[hasclass('text-wrap')]" position="replace">
             <span class="text-wrap d-flex flex-column flex-grow-1 overflow-hidden">
                 <t t-if="this.line.product_id.name_cn or this.line.product_id.name_km">
-                    <span t-if="this.line.product_id.name_cn" class="text-break fw-semibold" t-out="this.line.product_id.name_cn"/>
+                    <span t-if="this.line.product_id.name_cn" class="text-break fw-semibold">
+                        <t t-if="vals.discount">
+                            <span class="text-danger">★</span>
+                            <span class="ms-1"> </span>
+                        </t>
+                        <t t-out="this.line.product_id.name_cn"/>
+                    </span>
                     <span t-if="this.line.product_id.name_km" class="text-break fw-semibold" t-out="this.line.product_id.name_km"/>
                 </t>
                 <t t-else="" t-out="vals.name"/>
