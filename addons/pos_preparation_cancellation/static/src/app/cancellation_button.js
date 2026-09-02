@@ -7,7 +7,11 @@ import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { ControlButtons } from "@point_of_sale/app/screens/product_screen/control_buttons/control_buttons";
 import { ProductScreen } from "@point_of_sale/app/screens/product_screen/product_screen";
 import { OrderSummary } from "@point_of_sale/app/screens/product_screen/order_summary/order_summary";
-import { BACKSPACE } from "@point_of_sale/app/components/numpad/numpad";
+import {
+    BACKSPACE,
+    DECIMAL,
+    SWITCHSIGN,
+} from "@point_of_sale/app/components/numpad/numpad";
 import { patch } from "@web/core/utils/patch";
 import { PreparationCancellationDialog } from "./cancellation_dialog";
 import {
@@ -17,6 +21,14 @@ import {
     hasUnsentQuantity,
     isOrderlineSentToKitchen,
 } from "./cancellation_logic";
+
+function isQuantityInput(buttonValue) {
+    return (
+        /^\d$/.test(buttonValue) ||
+        buttonValue === DECIMAL.value ||
+        buttonValue === SWITCHSIGN.value
+    );
+}
 
 export class PreparationCancellationButton extends Component {
     static template = "pos_preparation_cancellation.PreparationCancellationButton";
@@ -83,9 +95,12 @@ patch(ProductScreen.prototype, {
         }
 
         return buttons.map((button) => {
+            const quantityInputLocked =
+                this.pos.numpadMode === "quantity" && isQuantityInput(button.value);
             const disableButton =
                 button.value === "quantity" ||
-                (button.value === BACKSPACE.value && !hasUnsentQuantity(selectedOrderline));
+                (button.value === BACKSPACE.value && !hasUnsentQuantity(selectedOrderline)) ||
+                quantityInputLocked;
             if (disableButton) {
                 return {
                     ...button,
@@ -98,11 +113,14 @@ patch(ProductScreen.prototype, {
     onNumpadClick(buttonValue) {
         const selectedLine = this.currentOrder?.getSelectedOrderline?.();
         const selectedOrderline = selectedLine?.combo_parent_id || selectedLine;
+        const quantityInputLocked =
+            this.pos.numpadMode === "quantity" && isQuantityInput(buttonValue);
 
         if (
             isOrderlineSentToKitchen(selectedOrderline) &&
             (buttonValue === "quantity" ||
-                (buttonValue === BACKSPACE.value && !hasUnsentQuantity(selectedOrderline)))
+                (buttonValue === BACKSPACE.value && !hasUnsentQuantity(selectedOrderline)) ||
+                quantityInputLocked)
         ) {
             return;
         }
@@ -119,6 +137,7 @@ patch(OrderSummary.prototype, {
 
         if (
             key === BACKSPACE.value &&
+            this.pos.numpadMode === "quantity" &&
             isOrderlineSentToKitchen(selectedOrderline) &&
             hasUnsentQuantity(selectedOrderline)
         ) {
@@ -127,6 +146,14 @@ patch(OrderSummary.prototype, {
             if (this.pos.config.module_pos_restaurant) {
                 this.pos.addPendingOrder([order.id]);
             }
+            return;
+        }
+
+        if (
+            this.pos.numpadMode === "quantity" &&
+            isOrderlineSentToKitchen(selectedOrderline)
+        ) {
+            this.numberBuffer.reset();
             return;
         }
 
