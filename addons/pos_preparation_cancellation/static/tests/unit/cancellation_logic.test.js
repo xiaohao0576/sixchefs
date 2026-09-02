@@ -4,6 +4,10 @@ import { definePosModels } from "@point_of_sale/../tests/unit/data/generate_mode
 import {
     applyOrderlineCancellation,
     canCancelOrderline,
+    canEditOrderline,
+    getPreparedQuantity,
+    hasUnsentQuantity,
+    isOrderlineSentToKitchen,
     normalizeCancellationReason,
 } from "@pos_preparation_cancellation/app/cancellation_logic";
 
@@ -13,6 +17,29 @@ describe("preparation cancellation", () => {
     test("keeps the configured reason unchanged", () => {
         expect(normalizeCancellationReason("质量问题")).toBe("质量问题");
         expect(typeof normalizeCancellationReason("质量问题")).toBe("string");
+    });
+
+    test("detects kitchen-sent lines and blocks quantity editing", () => {
+        const lockedLine = { prep_line_ids: [{ id: 1, quantity: 1, cancelled: 0 }] };
+        const unlockedLine = { prep_line_ids: [] };
+
+        expect(isOrderlineSentToKitchen(lockedLine)).toBe(true);
+        expect(isOrderlineSentToKitchen(unlockedLine)).toBe(false);
+        expect(canEditOrderline(lockedLine)).toBe(false);
+        expect(canEditOrderline(unlockedLine)).toBe(true);
+    });
+
+    test("allows removing only the quantity not yet sent to the kitchen", () => {
+        const line = {
+            prep_line_ids: [{ id: 1, quantity: 2, cancelled: 0 }],
+            getQuantity: () => 4,
+        };
+
+        expect(getPreparedQuantity(line)).toBe(2);
+        expect(hasUnsentQuantity(line)).toBe(true);
+
+        line.getQuantity = () => 2;
+        expect(hasUnsentQuantity(line)).toBe(false);
     });
 
     test("only allows positive regular or combo parent lines", () => {
