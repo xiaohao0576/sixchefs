@@ -82,6 +82,7 @@ class PosOrderReceipt(models.AbstractModel):
             'preset_datetime': format_datetime(self.env, self.preset_time) if self.preset_time else False,
             'partner_vat_label': self.partner_id.country_id.vat_label if self.partner_id.country_id else _("Tax ID"),
             'self_invoicing_url': f"{self.env.company.get_base_url()}/pos/ticket",
+            'pricelist_name': self.pricelist_id.name if self.pricelist_id else '',
             'prices': self._order_receipt_generate_taxe_data(),
             'cashier_name': self._order_receipt_generate_cashier_name(),
             'company_state_name': company.state_id.name if company.state_id else False,
@@ -94,6 +95,7 @@ class PosOrderReceipt(models.AbstractModel):
         tax_totals = self._get_order_tax_totals()  # Use account helpers to compute tax totals
         discount_amount = sum(line._get_discount_amount() for line in self.lines.filtered(lambda line: line.discount > 0))
         rounding = tax_totals.get('cash_rounding_base_amount_currency', 0)
+        pre_discount_total = sign * (tax_totals['total_amount_currency'] + discount_amount)
 
         return {
             'same_tax_base': tax_totals['same_tax_base'],
@@ -101,6 +103,7 @@ class PosOrderReceipt(models.AbstractModel):
             'rounding_amount': self._order_receipt_format_currency(sign * rounding) if rounding else False,
             'tax_amount': self._order_receipt_format_currency(sign * tax_totals['tax_amount_currency']),
             'total_amount': self._order_receipt_format_currency(sign * tax_totals['total_amount_currency']),
+            'pre_discount_total_amount': self._order_receipt_format_currency(pre_discount_total),
             'subtotal_amount': self._order_receipt_format_currency(sign * tax_totals['base_amount_currency']),
             'taxes': [{
                 'name': tax['group_name'],
@@ -165,6 +168,8 @@ class PosOrderReceipt(models.AbstractModel):
                 }
             else:
                 data['is_service_fee_line'] = False
+
+            data['is_negative_service_line'] = line.product_id.type == 'service' and line.price_subtotal_incl < 0
 
             lines.append(data)
 

@@ -157,6 +157,7 @@ export class GeneratePrinterData {
         const data = this.order._constructPriceData();
         const discount = this.order.getTotalDiscount();
         const rounding = this.order.appliedRounding;
+        const preDiscountTotal = data.taxDetails.total_amount + discount;
 
         return {
             same_tax_base: data.taxDetails.same_tax_base,
@@ -164,6 +165,7 @@ export class GeneratePrinterData {
             rounding_amount: rounding ? this.formatCurrency(rounding) : false,
             tax_amount: this.formatCurrency(data.taxDetails.tax_amount),
             total_amount: this.formatCurrency(data.taxDetails.total_amount),
+            pre_discount_total_amount: this.formatCurrency(preDiscountTotal),
             subtotal_amount: this.formatCurrency(data.taxDetails.base_amount_currency),
             taxes: data.taxDetails.subtotals[0]?.tax_groups?.map((tax) => ({
                 name: tax.group_name,
@@ -192,6 +194,7 @@ export class GeneratePrinterData {
                 product_unit_price: line.product_id.displayPriceUnit,
                 price_subtotal_incl: line.currencyDisplayPrice,
                 is_service_fee_line: line.isServiceFeeLine(),
+                is_negative_service_line: line.product_id?.type === "service" && line.priceIncl < 0,
                 service_fee_display_info: line.getServiceFeeDisplayInfo(),
                 no_discount_price: formatCurrency(line.displayPriceNoDiscount, line.currency.id),
             };
@@ -262,6 +265,7 @@ export class GeneratePrinterData {
                 tips_configuration: useTips ? tipsConfiguration : false,
                 preset_datetime: this.order.presetDateTime,
                 self_invoicing_url: `${baseUrl}/pos/ticket`,
+                pricelist_name: this.order.pricelist_id?.display_name || "",
                 prices: this.generateTaxData(),
                 cashier_name: this.order.getCashierName(),
                 formated_date_order: this.order.formatDateOrTime("date_order", "datetime"),
