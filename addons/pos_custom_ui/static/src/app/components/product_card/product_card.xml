@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="pos_custom_ui.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-img')]" position="replace"/>
         <xpath expr="//div[hasclass('product-name')]" position="replace">
             <div class="lh-sm product-name o_line_clamp"
                 t-att-class="{
@@ -14,6 +15,9 @@
                     <span t-if="this.props.product.name_km" t-out="this.props.product.name_km"/>
                 </t>
                 <t t-else="" t-out="this.props.name"/>
+                <small class="product-unit-price text-muted">
+                    (<t t-out="this.env.utils.formatCurrency(this.props.product.product_tmpl_id?.list_price ?? this.props.product.list_price ?? 0, this.env.services.pos.currency.id)"/> / <t t-out="this.props.product.uom_id?.name || ''"/>)
+                </small>
             </div>
         </xpath>
         <xpath expr="//div[hasclass('product-content')]" position="after">
