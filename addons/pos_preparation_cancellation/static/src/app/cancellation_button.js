@@ -16,10 +16,10 @@ import { patch } from "@web/core/utils/patch";
 import { PreparationCancellationDialog } from "./cancellation_dialog";
 import {
     applyOrderlineCancellation,
+        canModifyQuantity,
     canCancelOrderline,
     getPreparedQuantity,
     hasUnsentQuantity,
-    isOrderlineSentToKitchen,
 } from "./cancellation_logic";
 
 function isQuantityInput(buttonValue) {
@@ -90,7 +90,7 @@ patch(ProductScreen.prototype, {
         const selectedLine = this.currentOrder?.getSelectedOrderline?.();
         const selectedOrderline = selectedLine?.combo_parent_id || selectedLine;
 
-        if (!isOrderlineSentToKitchen(selectedOrderline)) {
+        if (canModifyQuantity(selectedOrderline)) {
             return buttons;
         }
 
@@ -117,7 +117,7 @@ patch(ProductScreen.prototype, {
             this.pos.numpadMode === "quantity" && isQuantityInput(buttonValue);
 
         if (
-            isOrderlineSentToKitchen(selectedOrderline) &&
+            !canModifyQuantity(selectedOrderline) &&
             (buttonValue === "quantity" ||
                 (buttonValue === BACKSPACE.value && !hasUnsentQuantity(selectedOrderline)) ||
                 quantityInputLocked)
@@ -138,7 +138,7 @@ patch(OrderSummary.prototype, {
         if (
             key === BACKSPACE.value &&
             this.pos.numpadMode === "quantity" &&
-            isOrderlineSentToKitchen(selectedOrderline) &&
+            !canModifyQuantity(selectedOrderline) &&
             hasUnsentQuantity(selectedOrderline)
         ) {
             this._setValue(getPreparedQuantity(selectedOrderline));
@@ -151,7 +151,7 @@ patch(OrderSummary.prototype, {
 
         if (
             this.pos.numpadMode === "quantity" &&
-            isOrderlineSentToKitchen(selectedOrderline)
+            !canModifyQuantity(selectedOrderline)
         ) {
             this.numberBuffer.reset();
             return;

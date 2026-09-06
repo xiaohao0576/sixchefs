@@ -17,6 +17,10 @@ export function isOrderlineSentToKitchen(orderline) {
     return typeof orderline.prepQty === "number" && orderline.prepQty > 0;
 }
 
+    export function canModifyQuantity(orderline) {
+        return orderline?.product_id?.uom_id?.id === 16 || !isOrderlineSentToKitchen(orderline);
+    }
+
 export function getPreparedQuantity(orderline) {
     if (typeof orderline?.prepQty === "number") {
         return orderline.prepQty;
