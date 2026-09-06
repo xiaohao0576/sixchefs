@@ -6,6 +6,7 @@
     'depends': ['point_of_sale', 'pos_discount', 'pos_hr', 'pos_self_order', 'pos_restaurant'],
     'assets': {
         'point_of_sale._assets_pos': [
+            'pos_custom_ui/static/src/app/services/pos_store.js',
             'pos_custom_ui/static/src/app/models/product_template.js',
             'pos_custom_ui/static/src/app/components/category_selector/category_selector.js',
             'pos_custom_ui/static/src/app/screens/floor_screen/floor_screen.xml',
