@@ -10,6 +10,9 @@
                             <span class="ms-1"> </span>
                         </t>
                         <t t-out="this.line.product_id.name_cn"/>
+                        <t t-if="this.line.displayPrice === 0">
+                            <span class="text-danger">[赠送]</span>
+                        </t>
                     </span>
                     <span t-if="this.line.product_id.name_km" class="text-break fw-semibold" t-out="this.line.product_id.name_km"/>
                 </t>

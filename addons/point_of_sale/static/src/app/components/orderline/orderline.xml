@@ -24,7 +24,12 @@
                             <small t-if="vals.attributeString" t-out="vals.attributeString" class="attribute-line fst-italic" />
                         </span>
                     </div>
-                    <div t-if="vals.noDiscountPrice" t-out="vals.noDiscountPrice" class="product-price price fw-bolder"/>
+                    <div
+                        t-if="vals.noDiscountPrice"
+                        t-out="vals.noDiscountPrice"
+                        class="product-price price fw-bolder"
+                        t-att-style="this.line.displayPrice === 0 ? 'text-decoration: line-through;' : ''"
+                    />
                     <div t-if="vals.taxGroup" t-out="vals.taxGroup" class="text-end tax-group" style="width: 2rem"/>
                 </div>
                 <ul class="info-list d-flex flex-column mb-0 ms-2" t-att-class="this.infoListClasses">
