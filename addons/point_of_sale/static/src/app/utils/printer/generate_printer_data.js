@@ -344,13 +344,6 @@ export class GeneratePrinterData {
             );
         }
 
-        // Print a separate order note ticket only if no other tickets exist
-        if (
-            !receiptsData.length &&
-            (orderChange.internal_note || orderChange.general_customer_note)
-        ) {
-            receiptsData.push(this.preparePreparationGroupedData({ title: "", data: [] }));
-        }
         return receiptsData;
     }
 
