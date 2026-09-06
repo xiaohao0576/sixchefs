@@ -1,5 +1,6 @@
 import { patch } from "@web/core/utils/patch";
 import { GeneratePrinterData } from "@point_of_sale/app/utils/printer/generate_printer_data";
+import { getStrNotes } from "@point_of_sale/app/models/utils/order_change";
 
 const PRODUCT_NAME_FIELDS = ["name_en", "name_km", "name_cn"];
 
@@ -19,9 +20,11 @@ patch(GeneratePrinterData.prototype, {
     generateLineData() {
         const lines = super.generateLineData(...arguments);
         for (const [index, lineData] of lines.entries()) {
-            const product = this.order.lines[index]?.product_id;
+            const line = this.order.lines[index];
+            const product = line?.product_id;
             addProductLanguageNames(lineData, product);
             addProductLanguageNames(lineData.product_data, product);
+            lineData.note = getStrNotes(line?.getNote?.() || false);
         }
         return lines;
     },
