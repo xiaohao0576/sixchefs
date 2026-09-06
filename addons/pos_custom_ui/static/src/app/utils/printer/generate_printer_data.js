@@ -1,5 +1,6 @@
 import { patch } from "@web/core/utils/patch";
 import { GeneratePrinterData } from "@point_of_sale/app/utils/printer/generate_printer_data";
+import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { getStrNotes } from "@point_of_sale/app/models/utils/order_change";
 
 const PRODUCT_NAME_FIELDS = ["name_en", "name_km", "name_cn"];
@@ -31,7 +32,27 @@ patch(GeneratePrinterData.prototype, {
 
     generatePreparationChanges(orderChange, categoryIdsSet) {
         const changes = super.generatePreparationChanges(...arguments);
+        const orderLineIndexes = new Map(
+            this.order.lines.map((line, index) => [line.uuid, index])
+        );
+        const sortChangesByOrder = (changeList) =>
+            changeList
+                .map((change, index) => {
+                    const orderLine = this.order.lines.find(
+                        (line) => line.uuid === change.line_uuid
+                    );
+                    const groupUuid = orderLine?.combo_parent_id?.uuid || orderLine?.uuid;
+                    return {
+                        change,
+                        index,
+                        orderIndex: orderLineIndexes.get(groupUuid) ?? Infinity,
+                    };
+                })
+                .sort((a, b) => a.orderIndex - b.orderIndex || a.index - b.index)
+                .map(({ change }) => change);
+
         for (const changeType of ["addedQuantity", "removedQuantity", "noteUpdate"]) {
+            changes[changeType] = sortChangesByOrder(changes[changeType] || []);
             for (const change of changes[changeType] || []) {
                 const product = this.models["product.product"].get(change.product_id);
                 addProductLanguageNames(change, product);
@@ -42,5 +63,14 @@ patch(GeneratePrinterData.prototype, {
             }
         }
         return changes;
+    },
+});
+
+patch(PosOrder.prototype, {
+    dataMaker(prepOrPosLine, quantity) {
+        const result = super.dataMaker(...arguments);
+        const line = prepOrPosLine.pos_order_line_id || prepOrPosLine;
+        result.data.line_uuid = line.uuid;
+        return result;
     },
 });
