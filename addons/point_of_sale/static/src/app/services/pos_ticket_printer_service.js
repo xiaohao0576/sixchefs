@@ -321,8 +321,12 @@ export class PosTicketPrinterService {
             const generator = this.getGenerator({ models: this.data.models, order });
             const categoryIds = new Set(printer.product_categories_ids.map((c) => c.id));
             const changes = generator.generatePreparationData(categoryIds, opts);
+            const printableChanges =
+                printer.name === "电脑总单打印机"
+                    ? changes.filter((ticket) => ticket.changes?.title === _t("NEW"))
+                    : changes;
 
-            for (const ticket of changes) {
+            for (const ticket of printableChanges) {
                 rawChangeForRetry = rawChangeForRetry || ticket._rawChange;
                 if (ticket.extra_data.reprint && !opts.explicitReprint) {
                     continue;
