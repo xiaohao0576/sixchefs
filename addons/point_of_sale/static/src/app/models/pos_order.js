@@ -1097,10 +1097,10 @@ export class PosOrder extends PosOrderAccounting {
 
 const keyMaker = (prepLine) => {
     const objectKey = {
-        product_id: prepLine.product_id.id,
+        product_id: prepLine.product_id?.id ?? prepLine.product_id ?? false,
         combo_parent_id: prepLine.combo_parent_id?.id,
-        combo_line_ids: prepLine.combo_line_ids.map((c) => c.id).sort(),
-        attribute_value_ids: prepLine.attribute_value_ids.map((a) => a.id).sort(),
+        combo_line_ids: (prepLine.combo_line_ids || []).map((c) => c.id).sort(),
+        attribute_value_ids: (prepLine.attribute_value_ids || []).map((a) => a.id).sort(),
     };
     return JSON.stringify(objectKey);
 };
