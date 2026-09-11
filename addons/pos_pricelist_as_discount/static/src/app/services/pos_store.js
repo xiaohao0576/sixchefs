@@ -17,7 +17,7 @@ patch(PosStore.prototype, {
 
         const discount = PRICELIST_DISCOUNTS[pricelist?.name] ?? 0;
         for (const line of this.getOrder().lines) {
-            if (line.price_type !== "original" || line.isPartOfCombo()) {
+            if (line.price_type !== "original" || line.discount === 100 || line.isPartOfCombo()) {
                 continue;
             }
 
