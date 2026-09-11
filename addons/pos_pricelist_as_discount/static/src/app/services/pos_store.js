@@ -17,6 +17,14 @@ patch(PosStore.prototype, {
 
         const discount = PRICELIST_DISCOUNTS[pricelist?.name] ?? 0;
         for (const line of this.getOrder().lines) {
+            if (
+                line.product_id.id === this.config.discount_product_id?.id &&
+                line.extra_tax_data?.discount_value === 0
+            ) {
+                line.delete();
+                continue;
+            }
+
             if (line.price_type !== "original" || line.discount === 100 || line.isPartOfCombo()) {
                 continue;
             }
